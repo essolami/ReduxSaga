@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './styles.css';
 
@@ -10,6 +11,8 @@ class ImageGrid extends Component {
   };
 
   componentDidMount() {
+    const { images } = this.props;
+    console.log(images);
     fetch(`https://api.unsplash.com/photos/?client_id=${key}&per_page=28`)
       .then((res) => res.json())
       .then((images) => {
@@ -38,4 +41,11 @@ class ImageGrid extends Component {
   }
 }
 
-export default ImageGrid;
+const mapStateToProps = ({ isLoading, images, error, imageStats }) => ({
+  isLoading,
+  images,
+  // error,
+  // imageStats,
+});
+
+export default connect(mapStateToProps, null)(ImageGrid);
